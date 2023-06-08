@@ -1,0 +1,9 @@
+{
+  "name": "pdf-slideshow",
+  "version": "1.0.0",
+  "description": "Simple webpage to slideshow pdf file pages",
+  "main": "index.js",
+  "repository": "https://github.com/Iftakharpy/pdf-slideshow",
+  "author": "Iftakhar Husan",
+  "license": "MIT"
+}

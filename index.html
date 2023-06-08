@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- No async to make sure pdf.js loads before custom script to set pdfjsLib.GlobalWorkerOptions.workerSrc attribute -->
+    <script src="libs/pdf.js"></script>
+    <script async defer src="index.js" type="module"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <input type="file" accept=".pdf" id="pdf-input">
+        <button id="previous-button">Previous</button>
+        <button id="next-button">Next</button>
+        <button id="rerender-button">Rerender</button>
+        <label for="page-change-interval">Page change interval</label>
+        <input id="page-change-interval-input" type="number" value="3000" min="0" step="100" placeholder="Interval in milliseconds">
+        <button id="start-page-change-interval-button">Start Slideshow</button>
+    </header>
+    <canvas id="pdf-renderer">
+    </canvas>
+</body>
+</html>
