@@ -54,18 +54,28 @@ pdfInput.addEventListener("change", async (e) => {
 rerenderButton.addEventListener("click", (e) => {
     showPage(pdfInfo.currentPage);
 });
+addEventListener('keydown', e => {
+    const handledKeys = ['ArrowRight', 'ArrowLeft', 'Space']
+    if (e.target !== document.body || !handledKeys.includes(e.code)) return;
+
+    e.preventDefault()
+    e.code === 'ArrowRight' && showNextPage()
+    e.code === 'ArrowLeft' && showPreviousPage()
+    e.code === 'Space' && toggleSlideShow()
+})
 nextButton.addEventListener("click", showNextPage);
 previousButton.addEventListener("click", showPreviousPage);
-startPageChangeIntervalButton.addEventListener('click', (e) => {
-    if (pdfInfo.pageChangeInterval) stopSlideShow()
-    else startSlideShow()
-})
+startPageChangeIntervalButton.addEventListener('click', toggleSlideShow)
 pageChangeIntervalInput.addEventListener('input', (e) => {
     if (pdfInfo.pageChangeInterval) stopSlideShow()
     startSlideShow()
 })
 
 // Helper functions
+function toggleSlideShow() {
+    if (pdfInfo.pageChangeInterval) stopSlideShow()
+    else startSlideShow()
+}
 function startSlideShow() {
     if (pdfInfo.pageChangeInterval) stopSlideShow()
 
