@@ -1,32 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Play pdf pages in loop with custom interval">
-    <meta name="keywords" content="PDF, Slideshow, Loop, Play, Powerpoint">
-    <meta name="author" content="Iftakhar Husan">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" class="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+            name="description"
+            content="Play pdf pages in loop with custom interval"
+        />
+        <meta
+            name="keywords"
+            content="PDF, Slideshow, Loop, Play, Powerpoint"
+        />
+        <meta name="author" content="Iftakhar Husan" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>PDF Slideshow</title>
-    
-    <!-- No async to make sure pdf.js loads before custom script to set pdfjsLib.GlobalWorkerOptions.workerSrc attribute -->
-    <script src="libs/pdf.js"></script>
-    <script async defer src="index.js" type="module"></script>
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <input type="file" accept=".pdf" id="pdf-input">
-        <button id="previous-button">Previous</button>
-        <button id="next-button">Next</button>
-        <button id="rerender-button">Rerender</button>
-        <label for="page-change-interval">Page change interval</label>
-        <input id="page-change-interval-input" type="number" value="3000" min="0" step="100" placeholder="Interval in milliseconds">
-        <button id="start-page-change-interval-button">Start Slideshow</button>
-    </header>
-    <canvas id="pdf-renderer">
-    </canvas>
-</body>
+        <title>PDF Slideshow</title>
+
+        <!-- No async to make sure pdf.js loads before custom script to set pdfjsLib.GlobalWorkerOptions.workerSrc attribute -->
+        <script src="libs/pdf.js"></script>
+        <script async defer src="index.js" type="module"></script>
+
+        <!-- DevIcons -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body class="">
+        <header>
+            <h1>PDF Slideshow</h1>
+            <span>
+                <button id="color-scheme-preference-button">
+                    <ion-icon name="moon-sharp"></ion-icon>
+                </button>
+                <a href="https://github.com/Iftakharpy/pdf-slideshow"
+                    ><i class="devicon-github-original"></i
+                ></a>
+                <button id="help-button">
+                    <ion-icon name="help"></ion-icon>
+                </button>
+            </span>
+        </header>
+
+        <aside id="keyboard-shortcuts-container" class="hidden">
+            <h2>Keyboard Shortcuts</h2>
+            <ol>
+                <li><kbd>H</kbd> - Show/Hide shortcut keys</li>
+                <li><kbd>O</kbd> - Open file dialogue to choose pdf file</li>
+                <li>
+                    <kbd>ArrowUp</kbd> - Increase page change interval by 100ms
+                </li>
+                <li>
+                    <kbd>ArrowDown</kbd> - Decrease page change interval by
+                    100ms
+                </li>
+                <li><kbd>ArrowLeft</kbd> - Show previous page</li>
+                <li><kbd>ArrowRight</kbd> - Show next page</li>
+                <li><kbd>R</kbd> - Reload current page</li>
+                <li><kbd>Space</kbd> - Start/Stop slideshow</li>
+                <li>
+                    <kbd>F</kbd> or <kbd>F11</kbd> - Toggle full screen mode
+                </li>
+                <li><kbd>T</kbd> - Toggle light/dark theme</li>
+            </ol>
+        </aside>
+
+        <main>
+            <div>
+                <label for="pdf-input">
+                    Open PDF file:
+                    <input type="file" accept=".pdf" id="pdf-input" />
+                </label>
+            </div>
+            <div class="page-controls">
+                <button id="previous-button" title="Open previous page">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                </button>
+                <span id="current-page-counter">1</span>
+                /
+                <span id="total-pages-counter">1</span>
+                <button id="next-button" title="Open next page">
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                </button>
+                <button id="rerender-button" title="Rerender current page">
+                    <ion-icon name="reload"></ion-icon>
+                </button>
+            </div>
+
+            <div>
+                <label for="page-change-interval-input">
+                    <span class="label-text"
+                        >Page change interval(<span class="italic">ms</span
+                        >)</span
+                    >:
+                    <input
+                        class="label-input"
+                        id="page-change-interval-input"
+                        type="number"
+                        value="3000"
+                        min="0"
+                        step="100"
+                        placeholder="Milliseconds. Default: 3000"
+                    />
+                </label>
+                <button
+                    id="start-page-change-interval-button"
+                    title="Start/Stop slideshow"
+                >
+                    <ion-icon name="play"></ion-icon>
+                </button>
+            </div>
+        </main>
+        <hr />
+
+        <canvas id="pdf-renderer"> </canvas>
+
+        <!-- IonIcons -->
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+        ></script>
+    </body>
 </html>

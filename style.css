@@ -1,24 +1,224 @@
 :root {
-    --margin-y: 3rem;
-    --margin-x: 2rem;
+    --dark-canvas-bg-color: #000;
+    --light-canvas-bg-color: #fff;
+
+    --dark-text-color: #b7e1d6;
+    --light-text-color: #421609;
+
+    --dark-primary-color: #04221a;
+    --light-primary-color: #ffcfc0;
+
+    --dark-button-color: #154237;
+    --dark-button-border-color: #7aff97;
+    --light-button-color: #ffad92;
+    --light-button-border-color: #a33e1f;
+
+    --dark-focus-ring-color: #ff728b;
+    --light-focus-ring-color: #e93838;
+
+    --dark-bg-color: #030908;
+    --light-bg-color: #fff9f6;
+
+    /* Setting */
+    --canvas-bg-color: var(--light-canvas-bg-color);
+    --text-color: var(--light-text-color);
+    --primary-color: var(--light-primary-color);
+    --button-color: var(--light-button-color);
+    --button-border-color: var(--light-button-border-color);
+    --focus-ring-color: var(--light-focus-ring-color);
+    --bg-color: var(--light-bg-color);
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
+:root:has(body.dark) {
+    --canvas-bg-color: var(--dark-canvas-bg-color);
+    --text-color: var(--dark-text-color);
+    --primary-color: var(--dark-primary-color);
+    --button-color: var(--dark-button-color);
+    --button-border-color: var(--dark-button-border-color);
+    --focus-ring-color: var(--dark-focus-ring-color);
+    --bg-color: var(--dark-bg-color);
+}
 
-    display: grid;
-    place-items: center;
-    gap: 0;
+
+body,
+html {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    background-color: var(--bg-color);
+}
+hr{
+    border: none;
+    border-top: 2px solid var(--primary-color);
+    margin: 0.5rem 0;
+}
+* {
+    color: var(--text-color);
+}
+
+button {
+    user-select: none;
+    color: var(--text-color);
+    background-color: var(--button-color);
+    border: 1px solid var(--button-border-color);
+    padding: 0.45rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+button,
+input,
+textarea {
+    margin: 0.1rem 0.1rem;
+}
+
+button:where(:focus-visible, :active),
+textarea:where(:focus-visible, :active),
+input:where(:focus-visible, :active),
+a:where(:focus-visible, :active) {
+border-radius: 0.45rem;
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+    margin: 0;
+    color: var(--text-color);
+    background-color: var(--button-color);
+}
+
+#previous-button,
+#next-button,
+#rerender-button {
+    line-height: 1;
+    font-weight: bold;
+}
+
+header,
+main {
+    padding: 0;
+    margin: 0;
+    padding: 1rem 3rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: space-between;
 }
 
 header {
-    padding: calc(var(--margin-y) / 5) calc(var(--margin-x) / 5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+}
+header * {
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+header :where(a, button) {
+    padding: 0.1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media all and (display-mode: fullscreen) {
     header {
         display: none;
     }
+}
+
+
+input {
+    color: var(--text-color);
+    background-color: transparent;
+    border: 1px solid var(--button-border-color);
+    padding: 0.45rem 0.75rem;
+    border-radius: 0.5rem;
+}
+
+input[type=file] {
+    cursor: pointer;
+    max-width: 100%;
+    padding: 0.25rem;
+    background: transparent;
+
+    border: 1px solid var(--button-border-color);
+    border-radius: 0.5rem;
+    color: var(--text-color);
+}
+
+input[type=file]::file-selector-button {
+    cursor: pointer;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.65rem;
+    border: none;
+    border-radius: 0.5rem;
+
+    color: var(--text-color);
+    background: var(--button-color);
+}
+
+
+
+main div {
+    display: inline-block;
+}
+
+label:has(>.label-input),
+label>.label-text,
+label>.label-input {
+    display: inline-block;
+}
+
+.italic {
+    font-style: italic;
+}
+
+#keyboard-shortcuts-container::after{
+    z-index: 9999;
+    content:'';
+    position: fixed;
+    background-color: black;
+}
+#keyboard-shortcuts-container{
+    z-index: 99999;
+    position: fixed;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    filter: contrast(1.25);
+    box-shadow: 0 0 0.25rem 0.1rem var(--text-color);
+    transition: all 0.2s ease-in-out;
+}
+.hidden {
+    display: none;
+}
+
+#keyboard-shortcuts-container ol {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+#keyboard-shortcuts-container ol li::marker {
+    font-weight: bold;
+    font-style: italic;
+}
+#keyboard-shortcuts-container kbd {
+    padding: 0.25rem 0.5rem;
+    background-color: var(--button-color);
+    filter: contrast(0.85);
+    border-radius: 0.35rem;
 }
