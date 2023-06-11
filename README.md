@@ -18,4 +18,7 @@ This repository implements the MVP to play PDF pages in loop with custom interva
 -   `KeyT` - Toggle dark/light theme
 
 
+## Why?
+In powerpoint when a team mate of mine created multiple powerpoint files with multiple themes, then she tried to merge the slides from all the files into a single powerpoint file. But microsoft powerpoint was applying original file's theme to other slides as well. She could not find a way to merge all the powerpoint slides keeping the original designs of different files. To address this issue PDF slideshow was created.
+
 > Note: It uses [PDF.js](https://github.com/mozilla/pdf.js) to render pages.
