@@ -23,13 +23,20 @@ const colorSchemePreferenceButton = document.querySelector(
     "#color-scheme-preference-button"
 );
 
+// localStorage keys
 const THEME_KEY_NAME = "color-scheme-preference";
+const PAGE_CHANGE_INTERVAL_KEY_NAME = "page-change-interval";
+
 // Watch color scheme changes
 applyColorSchemePreference();
 matchMedia("(prefers-color-scheme: dark)").addEventListener(
     "change",
     toggleColorSchemePreference
 );
+
+// Load page change interval from localStorage
+let pageChangeIntervalValue = localStorage.getItem(PAGE_CHANGE_INTERVAL_KEY_NAME);
+pageChangeIntervalInput.value = pageChangeIntervalValue || 3000;
 
 // Keep canvas sized to window
 updateRendererCanvasSize();
@@ -119,10 +126,13 @@ function toggleSlideShow() {
 function startSlideShow() {
     if (pdfInfo.pageChangeInterval) stopSlideShow();
 
+    let pageChangeIntervalValue = parseInt(pageChangeIntervalInput.value) || 3000
+    localStorage.setItem(PAGE_CHANGE_INTERVAL_KEY_NAME, pageChangeIntervalValue);
+
     // Start slideshow
     pdfInfo.pageChangeInterval = setInterval(() => {
         showNextPage();
-    }, parseInt(pageChangeIntervalInput.value) || 3000);
+    }, pageChangeIntervalValue);
     startPageChangeIntervalButton
         .querySelector("ion-icon")
         .setAttribute("name", "pause");
