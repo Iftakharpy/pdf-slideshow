@@ -6,8 +6,8 @@ This repository implements the MVP to play PDF pages in loop with custom interva
 
 -   `KeyH` - Show/Hide shortcut keys
 -   `KeyO` - Open file dialogue to choose pdf file
--   `ArrowUp` - Increase page change interval by 100ms
--   `ArrowDown` - Decrease page change interval by 100ms
+-   `ArrowUp` - Increase page change interval by 100ms and start slideshow
+-   `ArrowDown` - Decrease page change interval by 100ms and start slideshow
 -   `ArrowLeft` - Show previous page
 -   `ArrowRight` - Show next page
 -   `KeyR` - Reload current page
