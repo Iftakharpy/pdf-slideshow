@@ -41,6 +41,9 @@ addEventListener("resize", (e) => {
 function updateRendererCanvasSize() {
     rendererCanvas.width = innerWidth;
     rendererCanvas.height = innerHeight;
+    console.log(
+        `Canvas - width: ${rendererCanvas.width} height: ${rendererCanvas.height}`
+    );
 }
 
 // Data related to current PDF document
@@ -209,16 +212,7 @@ async function showPage(pageNumber, backgroundColour = "rgba(0,0,0,0)") {
     let page = await pdfJsDocument.getPage(pageNumber);
     let canvasWidth = rendererCanvas.clientWidth;
     let canvasHeight = rendererCanvas.clientHeight;
-    let viewport = null;
-
-    if (canvasHeight < canvasWidth) {
-        viewport = getScaledPdfPageViewportForDesiredWidth(
-            page,
-            getScaledPdfPageWidthForDesiredHeight(page, canvasHeight)
-        );
-    } else {
-        viewport = getScaledPdfPageViewportForDesiredWidth(page, canvasWidth);
-    }
+    let viewport = getViewportScaleToFit(page, canvasWidth, canvasHeight);
 
     let rendererCanvasContext = rendererCanvas.getContext("2d");
     const rendererContext = {
@@ -246,7 +240,28 @@ async function showPage(pageNumber, backgroundColour = "rgba(0,0,0,0)") {
 }
 
 // Viewport scaling helper functions
-function getScaledPdfPageViewportForDesiredWidth(page, desiredWidthPixels) {
+function getViewportScaleToFit(page, desiredWidthPixels, desiredHeightPixels) {
+    let viewport = null;
+    let viewportScaledForHeight = scaleViewportToHeight(page, desiredHeightPixels);
+    let viewportScaledForWidth = scaleViewportToWidth(page, desiredWidthPixels);
+
+    let minHeightViewport =
+        viewportScaledForHeight.height <= viewportScaledForWidth.height
+            ? viewportScaledForHeight
+            : viewportScaledForWidth;
+    let minWidthViewport =
+        viewportScaledForWidth.width <= viewportScaledForHeight.width
+            ? viewportScaledForWidth
+            : viewportScaledForHeight;
+    if (minHeightViewport.width > desiredWidthPixels) {
+        viewport = minWidthViewport;
+    } else {
+        viewport = minHeightViewport;
+    }
+    return viewport;
+}
+
+function scaleViewportToWidth(page, desiredWidthPixels) {
     let viewport = page.getViewport({ scale: 1 });
     let scale = desiredWidthPixels / viewport.width;
     viewport = page.getViewport({ scale: scale });
@@ -257,9 +272,14 @@ function getScaledPdfPageViewportForDesiredWidth(page, desiredWidthPixels) {
     });
     return scaledViewport;
 }
-function getScaledPdfPageWidthForDesiredHeight(page, desiredHeightPixels) {
+function scaleViewportToHeight(page, desiredHeightPixels) {
     let viewport = page.getViewport({ scale: 1 });
     let scale = desiredHeightPixels / viewport.height;
-    let scaledWidth = viewport.width * scale;
-    return scaledWidth;
+    viewport = page.getViewport({ scale: scale });
+    let scaledViewport = page.getViewport({
+        scale: scale,
+        offsetX: (rendererCanvas.width - viewport.width) / 2,
+        offsetY: (rendererCanvas.height - viewport.height) / 2,
+    });
+    return scaledViewport;
 }
