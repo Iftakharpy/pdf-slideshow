@@ -41,9 +41,6 @@ addEventListener("resize", (e) => {
 function updateRendererCanvasSize() {
     rendererCanvas.width = innerWidth;
     rendererCanvas.height = innerHeight;
-    console.log(
-        `Canvas - width: ${rendererCanvas.width} height: ${rendererCanvas.height}`
-    );
 }
 
 // Data related to current PDF document
@@ -213,6 +210,12 @@ async function showPage(pageNumber, backgroundColour = "rgba(0,0,0,0)") {
     let canvasWidth = rendererCanvas.clientWidth;
     let canvasHeight = rendererCanvas.clientHeight;
     let viewport = getViewportScaleToFit(page, canvasWidth, canvasHeight);
+    // console.log(
+    //     `Canvas - width: ${rendererCanvas.width} height: ${rendererCanvas.height}`
+    // );
+    // console.log(
+    //     `Viewport - width: ${viewport.width} height: ${viewport.height}`
+    // );
 
     let rendererCanvasContext = rendererCanvas.getContext("2d");
     const rendererContext = {
@@ -241,8 +244,10 @@ async function showPage(pageNumber, backgroundColour = "rgba(0,0,0,0)") {
 
 // Viewport scaling helper functions
 function getViewportScaleToFit(page, desiredWidthPixels, desiredHeightPixels) {
-    let viewport = null;
-    let viewportScaledForHeight = scaleViewportToHeight(page, desiredHeightPixels);
+    let viewportScaledForHeight = scaleViewportToHeight(
+        page,
+        desiredHeightPixels
+    );
     let viewportScaledForWidth = scaleViewportToWidth(page, desiredWidthPixels);
 
     let minHeightViewport =
@@ -253,10 +258,20 @@ function getViewportScaleToFit(page, desiredWidthPixels, desiredHeightPixels) {
         viewportScaledForWidth.width <= viewportScaledForHeight.width
             ? viewportScaledForWidth
             : viewportScaledForHeight;
-    if (minHeightViewport.width > desiredWidthPixels) {
-        viewport = minWidthViewport;
+
+    let viewport;
+    if (desiredWidthPixels <= desiredHeightPixels) {
+        if (minWidthViewport.width <= desiredWidthPixels) {
+            viewport = minWidthViewport;
+        } else {
+            viewport = minHeightViewport;
+        }
     } else {
-        viewport = minHeightViewport;
+        if (minHeightViewport.height <= desiredHeightPixels) {
+            viewport = minHeightViewport;
+        } else {
+            viewport = minWidthViewport;
+        }
     }
     return viewport;
 }
