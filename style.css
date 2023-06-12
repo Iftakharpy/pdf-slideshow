@@ -129,13 +129,6 @@ header :where(a, button) {
     justify-content: center;
 }
 
-@media all and (display-mode: fullscreen) {
-    header {
-        display: none;
-    }
-}
-
-
 input {
     color: var(--text-color);
     background-color: transparent;
