@@ -1,6 +1,6 @@
 # PDF Slideshow([live webpage](https://iftakharpy.github.io/pdf-slideshow/))
 
-This repository implements the MVP to play PDF pages in loop with custom interval. If you find this useful you can star the project.
+This repository implements the MVP to play PDF pages in loop with custom interval.
 
 ## Keyboard shortcuts
 
@@ -19,6 +19,6 @@ This repository implements the MVP to play PDF pages in loop with custom interva
 
 
 ## Why?
-In powerpoint when a team mate of mine created multiple powerpoint files with multiple themes, then she tried to merge the slides from all the files into a single powerpoint file. But microsoft powerpoint was applying original file's theme to other slides as well. She could not find a way to merge all the powerpoint slides keeping the original designs of different files. To address this issue PDF slideshow was created.
+Before the open doors day of `WIMMA LAB 2023`, a member of the team `Overflow` created two PowerPoint files with two different themes for our projects. The purpose of the slides was to present during our team and project introduction and also to play these in the background in loop in our room for visitors to see. When she tried to merge the slides from two different files into a single PowerPoint file Microsoft PowerPoint was messing up the themes of the slides. We could not find a way to merge all the PowerPoint slides keeping the original designs of the two PowerPoint files. To address this issue we had the idea to convert the slides into pdf files and then merge those pdf files. But then the problem was, we could not find a tool to play pdf pages in loop. And that's why I created this simple project.
 
 > Note: It uses [PDF.js](https://github.com/mozilla/pdf.js) to render pages.
